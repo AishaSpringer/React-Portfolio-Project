@@ -1,17 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import { render } from "react-dom";
+import Gallery from "react-photo-gallery";
+import { portfolio } from "./PortfolioPage";
+import ReactDOM from "react-dom";
+import "./index.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  Navigation,
+  Footer,
+  About,
+  Contact
+} from "./components";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Router>
+    <Navigation />
+    <Routes>
+      <Route path="/portfoliopage"  />
+      <Route path="/about"  />
+      <Route path="/contact" />
+    </Routes>
+    <Footer />
+  </Router>,
+
+  document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function columns(containerWidth) {
+  let columns = 1;
+  if (containerWidth >= 500) columns = 2;
+  if (containerWidth >= 900) columns = 3;
+  if (containerWidth >= 1500) columns = 4;
+  return columns;
+}
+
+const App = () => {
+  return (
+    <div>
+      <Gallery portfolio={portfolio} columns={columns} direction="column" />
+    </div>
+  );
+};
+
+render(<App />, document.getElementById("app"));
